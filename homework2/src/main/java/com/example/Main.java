@@ -13,8 +13,6 @@ public class Main{
     private static final String DB_PASSWORD = "redemption";
 
     public static void main(String[] args) throws SQLException {
-        Connection connection = DriverManager.getConnection(DB_URL,DB_USER,DB_PASSWORD);
-        ResultSet resultSet=connection.createStatement().executeQuery("select * from users");
         addSixUsers();
 
         System.out.println("Пользователи старше 20 лет:");
