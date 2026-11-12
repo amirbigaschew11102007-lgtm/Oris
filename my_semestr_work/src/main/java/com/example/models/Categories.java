@@ -12,5 +12,6 @@ import lombok.*;
 public class Categories {
     private Long id;
     private String nameCategory;
-    private String description;//чисто сводка правил будет по типу, что туда подходит
+    private String description;
+    //чисто сводка правил будет по типу, что туда подходит
 }

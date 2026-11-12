@@ -22,7 +22,7 @@ public class UserProfileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("userForJsp",userRepository.findAll());
+//        req.setAttribute("userForJsp",userRepository.findAll());
         req.getRequestDispatcher("WEB-INF/jsp/profile.jsp").forward(req, resp);
     }
 

@@ -8,8 +8,11 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
+@ToString(exclude = {"password","passwordRepeat"})
 public class SignUpForm {
-    private String login;
-    private String password;
+    private String username;
     private String email;
+    private String password;
+    private String passwordRepeat;
+    private Long city_id;
 }

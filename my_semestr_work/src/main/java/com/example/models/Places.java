@@ -3,6 +3,7 @@ package com.example.models;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,5 +20,10 @@ public class Places {
     private Long authorId;
     private Long cityId;
     private Long categoryId;
-    private Timestamp createdAt;
+    private String authorName;
+    private String cityName;
+    private String categoryName;
+    private String previewPhotoPath;
+    private LocalDateTime createdAt;
+    private boolean favorite;
 }

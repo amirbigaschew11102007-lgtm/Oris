@@ -3,6 +3,7 @@ package com.example.models;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,5 +18,5 @@ public class Photos {
     private Long author_id;
     private String original_file_path;
     private String storage_file_path;
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 }

@@ -3,6 +3,7 @@ package com.example.models;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,5 +19,5 @@ public class Comment {
     private String content;
     private String attachment_path;
     private Long recomment_id;
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 }
