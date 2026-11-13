@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface CommentsRepository{
+public interface CommentsRepository {
     long create(Comment comment) throws SQLException;
+
     List<Comment> findByPhotoId(long photoId) throws SQLException;
+}

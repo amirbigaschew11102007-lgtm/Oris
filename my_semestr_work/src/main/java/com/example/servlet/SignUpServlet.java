@@ -30,7 +30,7 @@ public class SignUpServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SignUpForm signUpForm = SignUpForm.builder()
-                .login(req.getParameter("login"))
+                .username(req.getParameter("login"))
                 .password(req.getParameter("password"))
                 .email(req.getParameter("email"))
                 .build();

@@ -6,10 +6,10 @@ import com.example.repository.impl.CategoriesRepositoryJdbcImpl;
 import com.example.repository.impl.PlaceRepositoryJdbcImpl;
 import com.example.repository.UserRepository;
 import com.example.repository.impl.UserRepositoryJdbcImpl;
-import com.example.service.AddPlaceService;
-import com.example.service.AddPlaceServiceImpl;
+import com.example.service.PlacesService;
 import com.example.service.SignUpService;
-import com.example.service.SignUpServiceImpl;
+import com.example.service.impl.PlacesServiceImpl;
+import com.example.service.impl.SignUpServiceImpl;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -55,7 +55,7 @@ public class CustomServletContextListeners implements ServletContextListener {
         PlaceRepository placeRepository = new PlaceRepositoryJdbcImpl(dataSource);
         SignUpService signUpService = new SignUpServiceImpl(usersRepository);
         CategoriesRepository categoriesRepository = new CategoriesRepositoryJdbcImpl(dataSource);
-        AddPlaceService addPlaceService = new AddPlaceServiceImpl(placeRepository);
+        PlacesService addPlaceService = new PlacesServiceImpl();
 
         servletContext.setAttribute("userRepository",usersRepository);
         servletContext.setAttribute("rootPage", placeRepository);
