@@ -4,6 +4,8 @@ import lombok.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,4 +21,7 @@ public class Photos {
     private String original_file_path;
     private String storage_file_path;
     private LocalDateTime createdAt;
+
+    @Builder.Default
+    private List<Comment> comments = new ArrayList<>();
 }

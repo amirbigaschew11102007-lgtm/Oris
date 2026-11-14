@@ -4,6 +4,8 @@ import lombok.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,4 +28,7 @@ public class Places {
     private String previewPhotoPath;
     private LocalDateTime createdAt;
     private boolean favorite;
+
+    @Builder.Default
+    private List<Photos> photos = new ArrayList<>();
 }
