@@ -12,7 +12,10 @@ import java.io.IOException;
         filterName = "authFilter",
         urlPatterns = "/*"
 )
-class AuthFilter implements Filter {
+public class AuthFilter implements Filter {
+
+    public AuthFilter() {
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -26,7 +29,8 @@ class AuthFilter implements Filter {
         );
 
         // Публичные страницы: логин, регистрация, статика
-        boolean publicPath = path.equals("/signUp")
+        boolean publicPath = path.equals("/login")
+                || path.equals("/signUp")
                 || path.equals("/categories")
                 || path.startsWith("/WEB-INF/");
 
@@ -39,7 +43,7 @@ class AuthFilter implements Filter {
 
         if (session == null || session.getAttribute("user") == null) {
             // Пользователь не вошёл
-            resp.sendRedirect(req.getContextPath() + "/login");
+            resp.sendRedirect(req.getContextPath() + "/signUp");
             return;
         }
 

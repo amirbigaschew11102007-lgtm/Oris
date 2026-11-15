@@ -26,7 +26,7 @@ public class CategoriesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String value = req.getParameter("value");
         try {
-            List<Categories> categories = categoriesRepository.AllPlacesForThisCategory(value);
+            List<Categories> categories = categoriesRepository.findAll(value);
             if (!categories.isEmpty()) {
                 printUsers(resp, categories, "Halloween");
             } else {

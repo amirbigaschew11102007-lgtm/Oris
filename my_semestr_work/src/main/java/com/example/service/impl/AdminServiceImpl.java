@@ -22,8 +22,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void addCategory(String name) throws SQLException {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Название категории должно содержать хоть что-то");
+        if (name == null || name.trim().isEmpty() || name.trim().length()>100) {
+            throw new IllegalArgumentException("Название категории должно содержать от 3 до 100 символов");
         }
         categoriesRepository.save(name.trim());
     }

@@ -63,7 +63,6 @@ public class PlacesServiceImpl implements PlacesService {
         return place;
     }
 
-    //пока такой, в дальнейшем посмотрю как можно заменить на dto
     @Override
     public long create(Places places, Part firstPhoto) throws SQLException, IOException {
         //тупо проверка на пустоту
@@ -74,10 +73,11 @@ public class PlacesServiceImpl implements PlacesService {
         if (firstPhoto == null || firstPhoto.getSize() == 0) {
             throw new IllegalArgumentException("Прикрепи хотя бы одну фотографию места.");
         }
+
         long placeId= placeRepository.create(places);
         String savedFileName = null;
-
         try {
+            //именно сохранённое имя, а не имя ориг файла
             savedFileName = fileStorageService.saveImage(firstPhoto);
 
             Photos photo = Photos.builder()

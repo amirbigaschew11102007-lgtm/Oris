@@ -31,6 +31,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
 
     @Override
+    // Part Это объект из Servlet API, который представляет отдельную часть отправленного запроса.
     public String saveImage(Part part) throws IOException {
         if (part == null || part.getSize() == 0) {
             return null;
@@ -48,7 +49,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
         String fileName = UUID.randomUUID() + getExtension(contentType);
         Path destination = path.resolve(fileName).normalize();
-        //доп проверки
+        //доп проверки на префикс(одинаковое начало)
         if (!destination.startsWith(path)) {
             throw new IOException("Некорректный путь файла.");
         }
@@ -56,7 +57,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         try (InputStream inputStream = part.getInputStream()) {
             Files.copy(inputStream, destination);
         }
-        //проверяем сигнатуру файла
+        //проверяем сигнатуру файла, чтобы чел не добавил файл image.txt просто изменив на image.jpg
         if (!hasValidSignature(destination, contentType)) {
             Files.delete(destination);
             throw new IllegalArgumentException("Содержимое файла не похоже на выбранный формат изображения.");
@@ -133,7 +134,11 @@ public class FileStorageServiceImpl implements FileStorageService {
                     && (bytes[0] & 0xFF) == 0x89
                     && bytes[1] == 0x50
                     && bytes[2] == 0x4E
-                    && bytes[3] == 0x47;
+                    && bytes[3] == 0x47
+                    && bytes[4] == 0x0D
+                    && bytes[5] == 0x0A
+                    && bytes[6] == 0x1A
+                    && bytes[7] == 0x0A;
             case "image/gif" -> bytes[0] == 'G' && bytes[1] == 'I' && bytes[2] == 'F';
             case "image/webp" -> count >= 12
                     && bytes[0] == 'R' && bytes[1] == 'I' && bytes[2] == 'F' && bytes[3] == 'F'

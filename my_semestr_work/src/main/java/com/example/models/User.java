@@ -15,6 +15,7 @@ public class User {
     private String email;
     private String password;
     private Long city_id;
+    private String cityName;
     private Role role;
     private String avatarPath;
 }
