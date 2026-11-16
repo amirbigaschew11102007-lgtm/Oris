@@ -29,10 +29,12 @@ public class AuthFilter implements Filter {
         );
 
         // Публичные страницы: логин, регистрация, статика
-        boolean publicPath = path.equals("/login")
+        boolean publicPath = path.equals("/register")
                 || path.equals("/signUp")
                 || path.equals("/categories")
-                || path.startsWith("/WEB-INF/");
+                ||path.equals("/WEB-INF/")
+                || path.startsWith("/assets/")
+                || path.equals("/favicon.ico");
 
         if (publicPath) {
             chain.doFilter(request, response);
@@ -43,7 +45,7 @@ public class AuthFilter implements Filter {
 
         if (session == null || session.getAttribute("user") == null) {
             // Пользователь не вошёл
-            resp.sendRedirect(req.getContextPath() + "/signUp");
+            resp.sendRedirect(req.getContextPath() + "/register");
             return;
         }
 

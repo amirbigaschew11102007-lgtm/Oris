@@ -120,12 +120,12 @@ public class UserRepositoryJdbcImpl implements UserRepository {
 
         return User.builder()
                 .id(resultSet.getLong("id"))
-                .name(resultSet.getString("name"))
+                .name(resultSet.getString("username"))
                 .email(resultSet.getString("email"))
-                .password(resultSet.getString("password"))
+                .password(resultSet.getString("password_hash"))
                 .city_id(resultSet.getLong("city_id"))
-                .role((Role) resultSet.getObject("role"))
-                .avatarPath(resultSet.getString("avatarPath"))
+                .avatarPath(resultSet.getString("avatar_path"))
+                .role(Role.valueOf(resultSet.getString("role")))
                 .build();
     }
 

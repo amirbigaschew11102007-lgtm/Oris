@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Set;
 
 
-@WebServlet("")
-public class RootServlet extends HttpServlet {
+@WebServlet("/home")
+public class HomeServlet extends HttpServlet {
     private PlacesService placesService;
     private FavoritesService favoritesService;
 
@@ -43,7 +43,7 @@ public class RootServlet extends HttpServlet {
             }
 
             req.setAttribute("places", places);
-            req.getRequestDispatcher("/WEB-INF/views/root.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req,resp);
         } catch (SQLException e) {
             throw new ServletException("Не удалось загрузить ленту ScoutX.", e);
         }

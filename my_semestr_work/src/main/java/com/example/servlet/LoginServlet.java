@@ -1,6 +1,7 @@
 package com.example.servlet;
 
 
+import com.example.dto.LoginForm;
 import com.example.dto.SessionUser;
 import com.example.dto.SignUpForm;
 import com.example.exeptions.BusinessException;
@@ -18,8 +19,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet("/signUp")
-public class SignUpServlet extends HttpServlet{
+public class LoginServlet extends HttpServlet{
     private SignUpService signUpService;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -33,19 +35,18 @@ public class SignUpServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SignUpForm signUpForm = SignUpForm.builder()
-                .username(req.getParameter("login"))
+        LoginForm signUpForm = LoginForm.builder()
+                .login(req.getParameter("login"))
                 .password(req.getParameter("password"))
-//                .email(req.getParameter("email"))
                 .build();
         try {
-            User user = signUpService.signUp(signUpForm);
+            User user = signUpService.login(signUpForm);
             HttpSession oldSession = req.getSession(false);
 
             if (oldSession != null) oldSession.invalidate();
 
             req.getSession(true).setAttribute("user", SessionUser.from(user));
-            resp.sendRedirect(req.getContextPath() + "/home");
+            resp.sendRedirect(req.getContextPath()+"/home");
         } catch (BusinessException e) {
             req.setAttribute("error", e.getMessage());
             doGet(req, resp);
