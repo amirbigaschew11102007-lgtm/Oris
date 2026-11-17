@@ -24,20 +24,19 @@ public class CategoriesRepositoryJdbcImpl implements CategoriesRepository {
     }
 
     @Override
-    public List<Categories> findAll(String category_name) {
+    public List<Categories> findAll() throws SQLException {
+        List<Categories> categories = new ArrayList<>();
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL)) {
-            preparedStatement.setString(1, category_name);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            List<Categories> categories = new ArrayList<>();
             while (resultSet.next()) {
                 categories.add(mapRow(resultSet));
             }
-            return categories;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
         }
+        return categories;
     }
 
     @Override

@@ -1,5 +1,5 @@
 <%@ tag body-content="empty" pageEncoding="UTF-8" %>
-<%@ attribute name="place" required="true" type="ru.scoutx.models.Place" %>
+<%@ attribute name="place" required="true" type="com.example.models.Places" %>
 <%@ attribute name="context" required="true" type="java.lang.String" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <article class="place-card">

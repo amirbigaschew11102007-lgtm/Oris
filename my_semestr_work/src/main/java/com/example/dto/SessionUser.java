@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 public class SessionUser {
     private Long id;
-    private String name;
+    private String username;
     private Role role;
     private Long cityId;
     private String cityName;
@@ -24,7 +24,7 @@ public class SessionUser {
     public static SessionUser from(User user){
         return SessionUser.builder()
                 .id(user.getId())
-                .name(user.getName())
+                .username(user.getName())
                 .role(user.getRole())
                 .cityId(user.getCity_id())
                 .cityName(user.getCityName())

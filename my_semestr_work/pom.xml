@@ -68,6 +68,14 @@
             <version>7.0.8</version>
             <scope>compile</scope>
         </dependency>
+        <!--работа с JSON-->
+        <!-- Source: https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.22.3</version>
+            <scope>compile</scope>
+        </dependency>
         <!--хэш паролей-->
         <!-- Source: https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
         <dependency>

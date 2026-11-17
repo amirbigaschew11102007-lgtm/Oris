@@ -63,23 +63,14 @@ public class RegisterServlet extends HttpServlet {
 
             req.getSession(true).setAttribute("user", SessionUser.from(user));
             resp.sendRedirect(req.getContextPath()+"/home");
-        } catch (ValidationExeption e) {
+        }  catch (ValidationExeption e) {
             req.setAttribute("errors", e.getErrors());
             req.setAttribute("error", String.join(" ", e.getErrors().values()));
             doGet(req, resp);
         } catch (Exception e) {
-        e.printStackTrace();
-        getServletContext().log("Ошибка регистрации", e);
-
-        String message = e.getMessage() == null ? e.getClass().getName() : e.getMessage();
-
-        req.setAttribute("error", "Ошибка регистрации: " + message);
-        doGet(req, resp);
-    }
-//        catch (Exception e) {
-//            getServletContext().log("Ошибка регистрации", e);
-//            req.setAttribute("error", "Не удалось зарегистрироваться. Проверь email и настройки базы данных.");
-//            doGet(req, resp);
-//        }
+            getServletContext().log("Ошибка регистрации", e);
+            req.setAttribute("error", "Не удалось зарегистрироваться. Проверь email и настройки базы данных.");
+            doGet(req, resp);
+        }
     }
 }

@@ -29,8 +29,8 @@ public class SignUpServiceImpl implements SignUpService {
     public User signUp(SignUpForm form) throws SQLException {
         Map<String, String> errors = new LinkedHashMap<>();
 
-        String username = form.getUsername();
-        String email = form.getEmail().toLowerCase();
+        String username = clean(form.getUsername());
+        String email = clean(form.getEmail().toLowerCase());
         String password = form.getPassword();
         String passwordRepeat = form.getPasswordRepeat();
 
@@ -73,14 +73,20 @@ public class SignUpServiceImpl implements SignUpService {
         if(form.getLogin()==null || form.getPassword()==null){
             throw new BusinessException("Отсутствует логин или пароль");
         }
+
         Optional<User> foundUser = userRepository.findByLogin(form.getLogin());
         if (foundUser.isEmpty()) {
             throw new BusinessException("пользователя не существует");
         }
+
         User user = foundUser.get();
         if(passwordEncoder.matches(form.getPassword(), user.getPassword())){
             throw new BusinessException("неверный пароль");
         }
         return user;
+    }
+
+    private String clean(String value) {
+        return value == null ? "" : value.trim();
     }
 }

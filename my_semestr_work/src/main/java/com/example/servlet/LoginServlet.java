@@ -1,9 +1,7 @@
 package com.example.servlet;
 
-
 import com.example.dto.LoginForm;
 import com.example.dto.SessionUser;
-import com.example.dto.SignUpForm;
 import com.example.exeptions.BusinessException;
 import com.example.models.User;
 import com.example.service.SignUpService;
@@ -16,9 +14,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
-@WebServlet("/signUp")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet{
     private SignUpService signUpService;
 

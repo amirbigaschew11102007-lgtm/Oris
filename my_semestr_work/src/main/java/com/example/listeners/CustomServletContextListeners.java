@@ -1,6 +1,5 @@
 package com.example.listeners;
 
-import com.example.models.Cities;
 import com.example.repository.*;
 import com.example.repository.impl.*;
 import com.example.service.*;
@@ -78,7 +77,7 @@ public class CustomServletContextListeners implements ServletContextListener {
             servletContext.setAttribute("favoritesRepository", favoritesRepository);
 
             servletContext.setAttribute("signUp", signUpService);
-            servletContext.setAttribute("places", placesService);
+            servletContext.setAttribute("placesService", placesService);
             servletContext.setAttribute("photosService", photosService);
             servletContext.setAttribute("commentsService", commentsService);
             servletContext.setAttribute("favoritesService", favoritesService);
