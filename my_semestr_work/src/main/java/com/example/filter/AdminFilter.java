@@ -24,7 +24,7 @@ public class AdminFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-        usersRepository = (UserRepository) filterConfig.getServletContext().getAttribute("usersRepository");
+        usersRepository = (UserRepository) filterConfig.getServletContext().getAttribute("userRepository");
     }
 
     @Override

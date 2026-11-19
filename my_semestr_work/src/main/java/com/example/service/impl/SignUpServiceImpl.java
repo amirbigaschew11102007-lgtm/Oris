@@ -80,7 +80,7 @@ public class SignUpServiceImpl implements SignUpService {
         }
 
         User user = foundUser.get();
-        if(passwordEncoder.matches(form.getPassword(), user.getPassword())){
+        if(!passwordEncoder.matches(form.getPassword(), user.getPassword())){
             throw new BusinessException("неверный пароль");
         }
         return user;

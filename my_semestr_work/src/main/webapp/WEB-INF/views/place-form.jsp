@@ -34,7 +34,7 @@
             <label>Категория<select name="categoryId" required><c:forEach var="category" items="${categories}">
                 <option value="${category.id}"
                         <c:if test="${not empty place and place.categoryId == category.id}">selected</c:if>><c:out
-                        value="${category.name}"/></option>
+                        value="${category.nameCategory}"/></option>
             </c:forEach></select></label></div>
         <c:if test="${empty place}"><label>Первая фотография <span
                 class="muted">(обязательно, JPG/PNG/GIF/WEBP до 5 МБ)</span><input type="file" name="photo"

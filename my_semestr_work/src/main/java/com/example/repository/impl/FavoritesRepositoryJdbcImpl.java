@@ -62,7 +62,7 @@ public class FavoritesRepositoryJdbcImpl implements FavoritesRepository {
             preparedStatement.setLong(1,userId);
             try(ResultSet resultSet = preparedStatement.executeQuery()){
                 while (resultSet.next()){
-                    placeId.add(resultSet.getLong("id"));
+                    placeId.add(resultSet.getLong("place_id"));
                 }
             }
         }

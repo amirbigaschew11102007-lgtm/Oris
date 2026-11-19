@@ -5,7 +5,8 @@ import jakarta.servlet.annotation.WebFilter;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "encodingFilter", urlPatterns = "/*")
+//просто наводит чистоту в запросе
+@WebFilter(urlPatterns = "/*")
 public class EncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

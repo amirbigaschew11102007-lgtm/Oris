@@ -9,7 +9,7 @@
     <c:if test="${not empty error}">
         <div class="notice notice-error"><c:out value="${error}"/></div>
     </c:if>
-    <form method="post" action="${pageContext.request.contextPath}/signUp" class="form-stack">
+    <form method="post" action="${pageContext.request.contextPath}/login" class="form-stack">
         <input type="hidden" name="_csrf" value="${requestScope.csrfToken}">
         <label>Email или имя пользователя<input name="login" required maxlength="255" autocomplete="username"></label>
         <label>Пароль<input type="password" name="password" required autocomplete="current-password"></label>

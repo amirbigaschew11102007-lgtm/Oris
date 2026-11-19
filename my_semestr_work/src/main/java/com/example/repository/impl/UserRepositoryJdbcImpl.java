@@ -20,7 +20,7 @@ public class UserRepositoryJdbcImpl implements UserRepository {
 
     private static final String SQL_FIND_BY_ID = SQL_SELECT + "WHERE u.id = ?";
     private static final String SQL_FIND_BY_LOGIN = SQL_SELECT +
-            "WHERE LOWER(u.email) = LOWER(?) OR LOWER(u.name) = LOWER(?)";
+            "WHERE LOWER(u.email) = LOWER(?) OR LOWER(u.username) = LOWER(?)";
 
     private static final String SQL_EXISTS =
             "SELECT 1 FROM users WHERE LOWER(username) = LOWER(?) OR LOWER(email) = LOWER(?) LIMIT 1";

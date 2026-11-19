@@ -18,6 +18,7 @@ public class Photos {
     private Long id;
     private Long place_id;
     private Long author_id;
+    private String uploaderName;
     private String original_file_path;
     private String storage_file_path;
     private LocalDateTime createdAt;

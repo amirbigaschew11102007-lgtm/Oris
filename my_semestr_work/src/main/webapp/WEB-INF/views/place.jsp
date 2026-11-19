@@ -38,7 +38,7 @@
     <div class="photo-list">
         <c:forEach var="photo" items="${place.photos}">
             <article class="photo-panel">
-                <img class="detail-photo" src="${pageContext.request.contextPath}/media/${photo.storageFilePath}"
+                <img class="detail-photo" src="${pageContext.request.contextPath}/media/${photo.storage_file_path}"
                      alt="Фотография места" loading="lazy">
                 <div class="photo-info"><span>Добавил: <c:out
                         value="${photo.uploaderName}"/></span><span>Комментарии: ${photo.comments.size()}</span></div>
