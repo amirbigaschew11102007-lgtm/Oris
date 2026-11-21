@@ -61,6 +61,7 @@ public class ClientHandler implements Runnable {
 
 
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
+        removeClientHandler();
         closeQuietly(bufferedReader);
         closeQuietly(bufferedWriter);
         closeQuietly(socket);
