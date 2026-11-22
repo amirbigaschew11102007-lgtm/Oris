@@ -1,5 +1,6 @@
 package com.example.service.impl;
 
+import com.example.dto.UploadedFile;
 import com.example.models.Comment;
 import com.example.models.Photos;
 import com.example.models.Places;
@@ -27,7 +28,7 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public Comment add(long photoId, long userId, String content, Part attachment) throws SQLException, IOException {
+    public Comment add(long photoId, long userId, String content, UploadedFile attachment) throws SQLException, IOException {
         Photos photos = photoRepository.findById(photoId)
                 .orElseThrow(() -> new IllegalArgumentException("Фотография не найдена."));
         Places places = placeRepository.findById(photos.getPlace_id())

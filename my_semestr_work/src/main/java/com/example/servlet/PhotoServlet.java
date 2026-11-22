@@ -2,6 +2,7 @@ package com.example.servlet;
 
 import com.example.dto.SessionUser;
 import com.example.service.PhotosService;
+import com.example.util.MultipartFileReader;
 import com.example.util.Web;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -29,7 +30,7 @@ public class PhotoServlet extends HttpServlet {
         try{
             long placeId = Long.parseLong(req.getParameter("placeId"));
             SessionUser user = Web.user(req);
-            photosService.add(placeId, user.getId(), req.getPart("photo"));
+            photosService.add(placeId, user.getId(), MultipartFileReader.read(req.getPart("photo")));
             resp.sendRedirect(req.getContextPath() + "/places/view?id=" + placeId);
         }catch (IllegalArgumentException e) {
             req.setAttribute("error", e.getMessage());

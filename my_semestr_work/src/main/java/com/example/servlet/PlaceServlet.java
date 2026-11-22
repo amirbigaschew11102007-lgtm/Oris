@@ -6,6 +6,7 @@ import com.example.repository.CategoriesRepository;
 import com.example.repository.CitiesRepository;
 import com.example.service.CategoriesService;
 import com.example.service.PlacesService;
+import com.example.util.MultipartFileReader;
 import com.example.util.Web;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -27,7 +28,7 @@ public class PlaceServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         placesService = (PlacesService) config.getServletContext().getAttribute("placesService");
-        categoriesService = (CategoriesService) config.getServletContext().getAttribute("categories");
+        categoriesService = (CategoriesService) config.getServletContext().getAttribute("categoriesService");
     }
 
     @Override
@@ -89,7 +90,7 @@ public class PlaceServlet extends HttpServlet {
                 place.setCityId(Long.parseLong(req.getParameter("cityId")));
                 place.setCategoryId(Long.parseLong(req.getParameter("categoryId")));
 
-                long id = placesService.create(place,req.getPart("photo"));
+                long id = placesService.create(place, MultipartFileReader.read(req.getPart("photo")));
                 resp.sendRedirect(req.getContextPath() + "/places/view?id=" + id + "&created=1");
                 return;
             }

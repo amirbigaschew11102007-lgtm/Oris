@@ -4,6 +4,7 @@ import com.example.dto.ApiResponse;
 import com.example.dto.SessionUser;
 import com.example.models.Comment;
 import com.example.service.CommentsService;
+import com.example.util.MultipartFileReader;
 import com.example.util.Web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletConfig;
@@ -38,7 +39,7 @@ public class CommentServlet extends HttpServlet {
         try{
             long photoId = Long.parseLong(req.getParameter("photoId"));
             Comment comment = commentsService.add(
-                    photoId, user.getId(),req.getParameter("content"),req.getPart("attachment")
+                    photoId, user.getId(),req.getParameter("content"), MultipartFileReader.read(req.getPart("attachment"))
             );
 
             Map<String,Object> data = new LinkedHashMap<>();

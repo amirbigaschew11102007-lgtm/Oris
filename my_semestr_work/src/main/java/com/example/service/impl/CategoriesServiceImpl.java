@@ -14,8 +14,8 @@ public class CategoriesServiceImpl implements CategoriesService {
     private final CitiesRepository citiesRepository;
 
     public CategoriesServiceImpl(CategoriesRepository categoriesRepository, CitiesRepository citiesRepository) {
-        this.categoriesRepository = categoriesRepository;
         this.citiesRepository = citiesRepository;
+        this.categoriesRepository = categoriesRepository;
     }
 
     @Override

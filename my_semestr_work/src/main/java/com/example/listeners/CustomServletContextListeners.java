@@ -67,6 +67,7 @@ public class CustomServletContextListeners implements ServletContextListener {
             );
             FavoritesService favoritesService = new FavoritesServiceImpl(placeRepository, favoritesRepository);
             AdminService adminService = new AdminServiceImpl(categoriesRepository, placeRepository);
+            CategoriesService categoriesService = new CategoriesServiceImpl(categoriesRepository,citiesRepository);
 
             servletContext.setAttribute("userRepository", usersRepository);
             servletContext.setAttribute("rootPage", placeRepository);
@@ -82,6 +83,7 @@ public class CustomServletContextListeners implements ServletContextListener {
             servletContext.setAttribute("commentsService", commentsService);
             servletContext.setAttribute("favoritesService", favoritesService);
             servletContext.setAttribute("adminService", adminService);
+            servletContext.setAttribute("categoriesService",categoriesService);
             servletContext.setAttribute("fileStorageService", fileStorageService);
 
             servletContext.log("ScoutX: DataSource, Repository и Service созданы.");

@@ -5,6 +5,7 @@ import com.example.dto.SignUpForm;
 import com.example.exceptions.ValidationException;
 import com.example.models.User;
 import com.example.repository.CitiesRepository;
+import com.example.service.CategoriesService;
 import com.example.service.SignUpService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -20,19 +21,18 @@ import java.sql.SQLException;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
     private SignUpService signUpService;
-    private CitiesRepository citiesRepository;
-
+    private CategoriesService categoriesService;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        citiesRepository = (CitiesRepository) config.getServletContext().getAttribute("cities");
+        categoriesService = (CategoriesService) config.getServletContext().getAttribute("categoriesService");
         signUpService = (SignUpService) config.getServletContext().getAttribute("signUp");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            req.setAttribute("cities",citiesRepository.findAll());
+            req.setAttribute("cities",categoriesService.cities());
             req.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);
