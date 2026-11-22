@@ -1,12 +1,13 @@
 package com.example.models;
 
+import com.example.enums.Role;
 import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "password")
 @EqualsAndHashCode
 @Builder
 public class User {

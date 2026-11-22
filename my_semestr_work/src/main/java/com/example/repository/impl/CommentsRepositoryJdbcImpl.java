@@ -18,7 +18,7 @@ public class CommentsRepositoryJdbcImpl implements CommentsRepository {
             "JOIN users u ON u.id = c.user_id " +
             "WHERE c.photo_id = ? ORDER BY c.created_at ASC";
     private static final String SQL_CREATE_COMMENTS = "INSERT INTO comments(photo_id, user_id, content, attachment_path, recomment_id) " +
-            "VALUES (?,?,?,?,?)";
+            "VALUES (?,?,?,?,?) RETURNING id";
 
     public CommentsRepositoryJdbcImpl(DataSource dataSource) {
         this.dataSource = dataSource;

@@ -1,7 +1,7 @@
 package com.example.service.impl;
 
+import com.example.dto.UploadedFile;
 import com.example.service.FileStorageService;
-import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +32,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     // Part Это объект из Servlet API, который представляет отдельную часть отправленного запроса.
-    public String saveImage(Part part) throws IOException {
+    public String saveImage(UploadedFile part) throws IOException {
         if (part == null || part.getSize() == 0) {
             return null;
         }
@@ -47,31 +47,29 @@ public class FileStorageServiceImpl implements FileStorageService {
         if (!ALLOWED_TYPES.contains(contentType)) {
             throw new IllegalArgumentException("Разрешены только JPG, PNG, GIF и WEBP.");
         }
-        String fileName = UUID.randomUUID() + getExtension(contentType);
-        Path destination = path.resolve(fileName).normalize();
-        //доп проверки на префикс(одинаковое начало)
-        if (!destination.startsWith(path)) {
-            throw new IOException("Некорректный путь файла.");
-        }
 
-        try (InputStream inputStream = part.getInputStream()) {
-            Files.copy(inputStream, destination);
-        }
+        String fileName = UUID.randomUUID() + extensionFor(contentType);
+        Path destination = resolve(fileName);
         //проверяем сигнатуру файла, чтобы чел не добавил файл image.txt просто изменив на image.jpg
-        if (!hasValidSignature(destination, contentType)) {
-            Files.delete(destination);
-            throw new IllegalArgumentException("Содержимое файла не похоже на выбранный формат изображения.");
+        try {
+            if (!hasValidSignature(destination, contentType)) {
+                Files.delete(destination);
+                throw new IllegalArgumentException("Содержимое файла не похоже на выбранный формат изображения.");
+            }
+            return fileName;
+        } catch (IOException | RuntimeException e) {
+            deleteQuietly(fileName);
+            throw e;
         }
-        return fileName;
     }
 
     @Override
-    public String originalFileName(Part part) {
-        if (part == null || part.getSubmittedFileName() == null) {
+    public String originalFileName(UploadedFile part) {
+        if (part == null || part.getOriginalName() == null) {
             return "image";
         }
         // Убираю возможный путь от браузера и сохраняю только имя файла.
-        String submitted = part.getSubmittedFileName().replace("\\", "/");
+        String submitted = part.getOriginalName().replace("\\", "/");
         String name = submitted.substring(submitted.lastIndexOf('/') + 1);
         if (name.length() > 255) {
             name = name.substring(name.length() - 255);
@@ -81,11 +79,11 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public Path resolve(String filename) throws IOException {
-        if(filename==null || filename.isBlank() || filename.contains("/") || filename.contains("\\")){
+        if (filename == null || filename.isBlank() || filename.contains("/") || filename.contains("\\")) {
             throw new IOException("Некорректное имя файла.");
         }
         Path file = path.resolve(filename).normalize();
-        if(!file.startsWith(path)){
+        if (!file.startsWith(path)) {
             throw new IOException("Недопустимый путь.");
         }
         return file;
@@ -93,10 +91,10 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public void deleteQuietly(String filename) {
-        if(filename==null){
+        if (filename == null) {
             return;
         }
-        try{
+        try {
             Files.deleteIfExists(resolve(filename));
         } catch (IOException e) {
             // Ошибка удаления временного файла не должна скрывать основную ошибку.
@@ -113,34 +111,37 @@ public class FileStorageServiceImpl implements FileStorageService {
         };
     }
 
+    private String extensionFor(String contentType) {
+        return switch (contentType) {
+            case "image/jpeg" -> ".jpg";
+            case "image/png" -> ".png";
+            case "image/gif" -> ".gif";
+            case "image/webp" -> ".webp";
+            default -> throw new IllegalArgumentException("Неподдерживаемый формат изображения.");
+        };
+    }
+
     private boolean hasValidSignature(Path file, String contentType) throws IOException {
-        byte[] bytes = new byte[12];
-        int count;
-
+        byte[] bytes;
         try (InputStream input = Files.newInputStream(file)) {
-            count = input.readNBytes(bytes, 0, bytes.length);
+            bytes = input.readNBytes(12);
         }
-
-        if (count < 6) {
+        if (bytes.length < 6) {
             return false;
         }
 
         return switch (contentType) {
-            case "image/jpeg" -> count >= 3
+            case "image/jpeg" -> bytes.length >= 3
                     && (bytes[0] & 0xFF) == 0xFF
                     && (bytes[1] & 0xFF) == 0xD8
                     && (bytes[2] & 0xFF) == 0xFF;
-            case "image/png" -> count >= 8
+            case "image/png" -> bytes.length >= 8
                     && (bytes[0] & 0xFF) == 0x89
-                    && bytes[1] == 0x50
-                    && bytes[2] == 0x4E
-                    && bytes[3] == 0x47
-                    && bytes[4] == 0x0D
-                    && bytes[5] == 0x0A
-                    && bytes[6] == 0x1A
-                    && bytes[7] == 0x0A;
+                    && bytes[1] == 0x50 && bytes[2] == 0x4E && bytes[3] == 0x47
+                    && bytes[4] == 0x0D && bytes[5] == 0x0A
+                    && bytes[6] == 0x1A && bytes[7] == 0x0A;
             case "image/gif" -> bytes[0] == 'G' && bytes[1] == 'I' && bytes[2] == 'F';
-            case "image/webp" -> count >= 12
+            case "image/webp" -> bytes.length >= 12
                     && bytes[0] == 'R' && bytes[1] == 'I' && bytes[2] == 'F' && bytes[3] == 'F'
                     && bytes[8] == 'W' && bytes[9] == 'E' && bytes[10] == 'B' && bytes[11] == 'P';
             default -> false;

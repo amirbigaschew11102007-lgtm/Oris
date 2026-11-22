@@ -4,6 +4,7 @@ import com.example.dto.SessionUser;
 import com.example.models.Places;
 import com.example.repository.CategoriesRepository;
 import com.example.repository.CitiesRepository;
+import com.example.service.CategoriesService;
 import com.example.service.PlacesService;
 import com.example.util.Web;
 import jakarta.servlet.ServletConfig;
@@ -20,15 +21,13 @@ import java.io.IOException;
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 7 * 1024 * 1024)
 public class PlaceServlet extends HttpServlet {
     private PlacesService placesService;
-    private CitiesRepository citiesRepository;
-    private CategoriesRepository categoriesRepository;
+    private CategoriesService categoriesService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         placesService = (PlacesService) config.getServletContext().getAttribute("placesService");
-        citiesRepository = (CitiesRepository) config.getServletContext().getAttribute("cities");
-        categoriesRepository = (CategoriesRepository) config.getServletContext().getAttribute("categories");
+        categoriesService = (CategoriesService) config.getServletContext().getAttribute("categories");
     }
 
     @Override
@@ -122,7 +121,7 @@ public class PlaceServlet extends HttpServlet {
     }
 
     private void prepareForm(HttpServletRequest request) throws Exception {
-        request.setAttribute("cities", citiesRepository.findAll());
-        request.setAttribute("categories", categoriesRepository.findAll());
+        request.setAttribute("cities", categoriesService.cities());
+        request.setAttribute("categories", categoriesService.categories());
     }
 }

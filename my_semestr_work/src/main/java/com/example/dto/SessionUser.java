@@ -1,6 +1,6 @@
 package com.example.dto;
 
-import com.example.models.Role;
+import com.example.enums.Role;
 import com.example.models.User;
 import lombok.*;
 

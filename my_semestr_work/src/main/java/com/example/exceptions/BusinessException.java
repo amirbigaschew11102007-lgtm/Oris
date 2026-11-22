@@ -1,6 +1,4 @@
-package com.example.exeptions;
-
-import java.util.Map;
+package com.example.exceptions;
 
 public class BusinessException extends RuntimeException {
 

@@ -1,5 +1,6 @@
 package com.example.service.impl;
 
+import com.example.dto.UploadedFile;
 import com.example.models.Comment;
 import com.example.models.Photos;
 import com.example.models.Places;
@@ -8,7 +9,6 @@ import com.example.repository.PhotoRepository;
 import com.example.repository.PlaceRepository;
 import com.example.service.FileStorageService;
 import com.example.service.PlacesService;
-import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -64,7 +64,7 @@ public class PlacesServiceImpl implements PlacesService {
     }
 
     @Override
-    public long create(Places places, Part firstPhoto) throws SQLException, IOException {
+    public long create(Places places, UploadedFile firstPhoto) throws SQLException, IOException {
         //тупо проверка на пустоту
         places.setTitle(required(places.getTitle(),"Укажите название места"));
         if (places.getTitle().length() > 150) {
@@ -120,7 +120,7 @@ public class PlacesServiceImpl implements PlacesService {
         Places existing = placeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Публикация не найдена."));
 
-        if (!admin || existing.getAuthorId() != currentUserId){
+        if (!admin && existing.getAuthorId() != currentUserId){
             throw new SecurityException("Можно удалять только собственные публикации.");
         }
 

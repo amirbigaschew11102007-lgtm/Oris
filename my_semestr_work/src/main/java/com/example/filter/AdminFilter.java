@@ -1,5 +1,6 @@
 package com.example.filter;
 
+import com.example.util.Web;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -11,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import com.example.dto.SessionUser;
-import com.example.models.Role;
+import com.example.enums.Role;
 import com.example.models.User;
 import com.example.repository.UserRepository;
 
@@ -47,7 +48,7 @@ public class AdminFilter implements Filter {
                 resp.sendRedirect(req.getContextPath() + "/login");
                 return;
             }
-            if (current.getRole()== Role.ADMIN) {
+            if (current.getRole() != Role.ADMIN) {
                 resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Доступ разрешён только администратору.");
                 return;
             }
@@ -56,6 +57,16 @@ public class AdminFilter implements Filter {
             chain.doFilter(request, response);
         } catch (Exception e) {
             throw new ServletException("Не удалось проверить права администратора.", e);
+        }
+    }
+    private void deny(HttpServletRequest request, HttpServletResponse response, int status, String message)
+            throws IOException {
+        if (Web.isAjax(request)) {
+            Web.writeApiError(response, status, message);
+        } else if (status == HttpServletResponse.SC_UNAUTHORIZED) {
+            response.sendRedirect(request.getContextPath() + "/login");
+        } else {
+            response.sendError(status, message);
         }
     }
 }

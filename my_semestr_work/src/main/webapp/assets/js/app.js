@@ -11,8 +11,12 @@
             body.set('placeId', button.dataset.placeId);
             const response = await fetch(`${config.context}/favorites`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8', 'X-CSRF-Token': config.csrf },
-                body
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                    'X-CSRF-Token': config.csrf,
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }, body: new FormData(form)
             });
             const data = await response.json();
             if (!response.ok || !data.ok) throw new Error(data.error || 'Не удалось изменить избранное.');
@@ -40,7 +44,10 @@
         try {
             const response = await fetch(`${config.context}/comments`, {
                 method: 'POST',
-                headers: { 'X-CSRF-Token': config.csrf },
+                headers: { 'X-CSRF-Token': config.csrf,
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
                 body: new FormData(form)
             });
             const data = await response.json();

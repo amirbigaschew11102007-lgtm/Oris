@@ -49,7 +49,7 @@
                                 <div class="comment-head"><strong><c:out value="${comment.username}"/></strong><span
                                         class="muted small"><c:out value="${comment.createdAt}"/></span></div>
                                 <p><c:out value="${comment.content}"/></p><c:if
-                                    test="${not empty comment.attachmentPath}"><a
+                                    test="${not empty comment.attachment_path}"><a
                                     href="${pageContext.request.contextPath}/media/${comment.attachmentPath}"
                                     target="_blank"><img class="comment-attachment"
                                                          src="${pageContext.request.contextPath}/media/${comment.attachmentPath}"

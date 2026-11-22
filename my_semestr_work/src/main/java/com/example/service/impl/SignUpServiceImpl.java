@@ -2,9 +2,9 @@ package com.example.service.impl;
 
 import com.example.dto.LoginForm;
 import com.example.dto.SignUpForm;
-import com.example.exeptions.BusinessException;
-import com.example.exeptions.ValidationExeption;
-import com.example.models.Role;
+import com.example.exceptions.BusinessException;
+import com.example.exceptions.ValidationException;
+import com.example.enums.Role;
 import com.example.models.User;
 import com.example.repository.UserRepository;
 import com.example.service.SignUpService;
@@ -53,7 +53,7 @@ public class SignUpServiceImpl implements SignUpService {
         }
 
         if (!errors.isEmpty()) {
-            throw new ValidationExeption(errors);
+            throw new ValidationException(errors);
         }
         User user = User.builder()
                 .name(form.getUsername())
@@ -76,12 +76,12 @@ public class SignUpServiceImpl implements SignUpService {
 
         Optional<User> foundUser = userRepository.findByLogin(form.getLogin());
         if (foundUser.isEmpty()) {
-            throw new BusinessException("пользователя не существует");
+            throw new BusinessException("Пользователя не существует");
         }
 
         User user = foundUser.get();
         if(!passwordEncoder.matches(form.getPassword(), user.getPassword())){
-            throw new BusinessException("неверный пароль");
+            throw new BusinessException("Неверный пароль");
         }
         return user;
     }

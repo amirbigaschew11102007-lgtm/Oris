@@ -2,7 +2,7 @@ package com.example.servlet;
 
 import com.example.dto.LoginForm;
 import com.example.dto.SessionUser;
-import com.example.exeptions.BusinessException;
+import com.example.exceptions.BusinessException;
 import com.example.models.User;
 import com.example.service.SignUpService;
 import jakarta.servlet.ServletConfig;

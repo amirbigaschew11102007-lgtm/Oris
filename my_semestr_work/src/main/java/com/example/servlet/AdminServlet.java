@@ -1,9 +1,9 @@
 package com.example.servlet;
 
 
-import com.example.repository.CategoriesRepository;
 import com.example.repository.UserRepository;
 import com.example.service.AdminService;
+import com.example.service.CategoriesService;
 import com.example.service.PlacesService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -19,7 +19,7 @@ public class AdminServlet extends HttpServlet {
     private AdminService adminService;
     private PlacesService placesService;
     private UserRepository userRepository;
-    private CategoriesRepository categoriesRepository;
+    private CategoriesService categoriesService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -27,7 +27,7 @@ public class AdminServlet extends HttpServlet {
         adminService = (AdminService) config.getServletContext().getAttribute("adminService");
         placesService = (PlacesService) config.getServletContext().getAttribute("placesService");
         userRepository = (UserRepository) config.getServletContext().getAttribute("userRepository");
-        categoriesRepository = (CategoriesRepository) config.getServletContext().getAttribute("categories");
+        categoriesService = (CategoriesService) config.getServletContext().getAttribute("categories");
     }
 
     @Override
@@ -65,6 +65,6 @@ public class AdminServlet extends HttpServlet {
     private void loadPage(HttpServletRequest request) throws Exception {
         request.setAttribute("places", placesService.allForAdmin());
         request.setAttribute("users", userRepository.findAll());
-        request.setAttribute("categories", categoriesRepository.findAll());
+        request.setAttribute("categories", categoriesService.categories());
     }
 }

@@ -18,8 +18,8 @@ public class PhotoRepositoryJdbcImpl implements PhotoRepository {
 
     private final static String SQL_CREATE = "INSERT INTO photos (place_id, uploaded_by, original_file_path, storage_file_path) " +
             "VALUES (?, ?, ?, ?) RETURNING id";
-    private final static String SQL_FIND_BY_ID = SELECT_PHOTO + "WHERE p.place_id = ? ORDER BY p.created_at DESC";
-    private final static String SQL_FIND_BY_PLACEID = SELECT_PHOTO + "WHERE p.id = ?";
+    private final static String SQL_FIND_BY_PLACEID = SELECT_PHOTO + "WHERE p.place_id = ? ORDER BY p.created_at DESC";
+    private final static String SQL_FIND_BY_ID = SELECT_PHOTO + "WHERE p.id = ?";
 
 
     public PhotoRepositoryJdbcImpl(DataSource dataSource) {
@@ -65,7 +65,7 @@ public class PhotoRepositoryJdbcImpl implements PhotoRepository {
             preparedStatement.setLong(1, photoId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    Optional.of(mapRow(resultSet));
+                    return Optional.of(mapRow(resultSet));
                 }
             }
         }

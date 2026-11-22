@@ -1,6 +1,6 @@
 package com.example.repository.impl;
 
-import com.example.models.Role;
+import com.example.enums.Role;
 import com.example.models.User;
 import com.example.repository.UserRepository;
 

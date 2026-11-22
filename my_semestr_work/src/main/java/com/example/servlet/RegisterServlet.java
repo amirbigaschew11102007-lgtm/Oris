@@ -2,7 +2,7 @@ package com.example.servlet;
 
 import com.example.dto.SessionUser;
 import com.example.dto.SignUpForm;
-import com.example.exeptions.ValidationExeption;
+import com.example.exceptions.ValidationException;
 import com.example.models.User;
 import com.example.repository.CitiesRepository;
 import com.example.service.SignUpService;
@@ -63,7 +63,7 @@ public class RegisterServlet extends HttpServlet {
 
             req.getSession(true).setAttribute("user", SessionUser.from(user));
             resp.sendRedirect(req.getContextPath()+"/home");
-        }  catch (ValidationExeption e) {
+        }  catch (ValidationException e) {
             req.setAttribute("errors", e.getErrors());
             req.setAttribute("error", String.join(" ", e.getErrors().values()));
             doGet(req, resp);
