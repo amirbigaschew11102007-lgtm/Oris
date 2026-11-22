@@ -71,6 +71,7 @@ public class CommentsRepositoryJdbcImpl implements CommentsRepository {
                 .photo_id(resultSet.getLong("photo_id"))
                 .user_id(resultSet.getLong("user_id"))
                 .content(resultSet.getString("content"))
+                .username(resultSet.getString("username"))
                 .attachment_path(resultSet.getString("attachment_path"))
                 .recomment_id(resultSet.getObject("recomment_id", Long.class))
                 .createdAt(createdAt == null ? null : createdAt.toLocalDateTime())

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
@@ -50,6 +51,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
         String fileName = UUID.randomUUID() + extensionFor(contentType);
         Path destination = resolve(fileName);
+        Files.write(destination, part.getContent(), StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
         //проверяем сигнатуру файла, чтобы чел не добавил файл image.txt просто изменив на image.jpg
         try {
             if (!hasValidSignature(destination, contentType)) {

@@ -123,7 +123,7 @@ public class UserRepositoryJdbcImpl implements UserRepository {
                 .name(resultSet.getString("username"))
                 .email(resultSet.getString("email"))
                 .password(resultSet.getString("password_hash"))
-                .city_id(resultSet.getLong("city_id"))
+                .city_id(cityId)
                 .avatarPath(resultSet.getString("avatar_path"))
                 .role(Role.valueOf(resultSet.getString("role")))
                 .build();
